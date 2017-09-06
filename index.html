@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>游戏动画效果</title>
+    <style>
+        #canvas{
+            border: 1px solid #333;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas" width="400" height="605">
+
+    </canvas>
+    <audio id="audio" src="audio/jump.wav">
+
+    </audio>
+
+    <div class="container" style="display: inline-block">
+
+    </div>
+
+</body>
+<script src="js/utils/utils.js"></script>
+<script src="js/anigame/anigame.js"></script>
+<script src="js/aniscene/scene_main/component/aniimage.js"></script>
+<script src="js/aniscene/scene_main/component/floor.js"></script>
+<script src="js/aniscene/scene_main/component/label.js"></script>
+<script src="js/aniscene/scene_main/component/pipe.js"></script>
+<script src="js/aniscene/scene.js"></script>
+<script src="js/aniscene/title/scence_tittle.js"></script>
+<script src="js/aniscene/end/scence_end.js"></script>
+<script src="js/aniscene/scene_main/component/score.js"></script>
+<script src="js/aniscene/scene_main/scenemain.js"></script>
+<script src="js/aniscene/scene_main/component/player.js"></script>
+
+<script src="js/conf/conf.js"></script>
+    <script>
+       var audio = document.getElementById('audio');
+
+       var imgs = {
+           bird1 : 'img/bird/1.png',
+           bird2 : 'img/bird/2.png',
+           bird3 : 'img/bird/3.png',
+           bg:'img/background.png',
+           floor:'img/floor.png',
+           pipeT:'img/pipe/top.png',
+           pipeB:'img/pipe/bottom.png',
+           logo:'img/logo.png',
+           ready:'img/getready.png'
+       }
+
+
+
+       var bindEvent = function () {
+           bindAll('.conf', 'change', function (e) {
+
+               var target = e.target;
+               // 得到 conf 对象的string
+               var bindConf = target.dataset.value;
+               var v = target.value;
+               eval(bindConf+'.value' + '=' + v);
+               console.log(conf_player.playerSpeed.value);
+               //找到最近的label节点
+               var label = target.closest('label').querySelector('.gua-speed');
+               label.innerText = v;
+
+           });
+       }
+
+
+       var _main = function () {
+
+           insertTemplateControls();
+           bindEvent();
+            log(window.fps);
+           var game = new AniGame(imgs, function (g) {
+               var s = new ScenceTitle(g);
+               g.scene = s;
+           })
+
+       }
+
+
+    _main();
+
+
+    </script>
+</html>
